@@ -19,12 +19,12 @@ data_name = args.dataset
 
 if data_name == 'ZINC250k':
     max_atoms = 38
-    path = 'data/zinc250k.csv'
+    path = 'dataset/zinc250k.csv'
     smiles_col = 'smiles'
     label_idx = 1
 elif data_name == 'QM9':
     max_atoms = 9
-    path = 'data/qm9.csv'
+    path = 'dataset/qm9.csv'
     smiles_col = 'SMILES1'
     label_idx = 2
 else:
@@ -44,5 +44,5 @@ result = parser.parse(df, return_smiles=True)
 dataset = result['dataset']
 smiles = result['smiles']
 
-NumpyTupleDataset.save(f'data/{data_name.lower()}_kekulized.npz', dataset)
+NumpyTupleDataset.save(f'../data/{data_name.lower()}_kekulized.npz', dataset)
 print('Total time:', time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time)))

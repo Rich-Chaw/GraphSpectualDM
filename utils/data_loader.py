@@ -1,5 +1,5 @@
 from torch.utils.data import TensorDataset, DataLoader
-from data.data_generators import load_dataset
+from data_generators import load_dataset
 from utils.graph_utils import init_features, graphs_to_tensor
 import torch
 import random
@@ -18,10 +18,11 @@ def graphs_to_dataloader(config, graph_list):
 
 
 def graphs_to_dataloader2(config, graph_list):
-
+    # get the adjacency matrix
     adjs_tensor = graphs_to_tensor(graph_list, config.data.max_node_num)
     x_tensor = init_features(config.data.init, adjs_tensor, config.data.max_feat_num)
 
+    # get the eigenvectors and eigenvalues
     # la, u = torch.symeig(adjs_tensor, eigenvectors=True)
     la, u = torch.linalg.eigh(adjs_tensor)
     # la = torch.diag_embed(la)
@@ -33,7 +34,7 @@ def graphs_to_dataloader2(config, graph_list):
 
 def dataloader(config, get_graph_list=False):
     graph_list = load_dataset(data_dir=config.data.dir, file_name=config.data.data)
-    print("graph_list:",graph_list)
+    print("len graph_list:",len(graph_list))
 
     # This line can be deleted to fix train and test set
     # random.shuffle(graph_list)

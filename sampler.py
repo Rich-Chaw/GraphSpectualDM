@@ -27,7 +27,7 @@ class Sampler(object):
     def sample(self):
         # -------- Load checkpoint --------
         self.ckpt_dict = load_ckpt(self.config, self.device)
-        self.configt = self.ckpt_dict['config']
+        self.configt = self.ckpt_dict['config']      # it seems that the configt is the same as self.config
         if not "type" in self.configt:
             print("self.configt has not type setting")
             self.configt.type = self.config.type
@@ -91,6 +91,7 @@ class Sampler(object):
             adj = adj + torch.transpose(adj, -1, -2)
 
             samples_int = quantize(adj)
+            # print("samples_int:", samples_int)
             samples_int_np = samples_int.cpu().numpy()
 
             if r == 0:
@@ -100,12 +101,12 @@ class Sampler(object):
                 adj_np_to_save = np.vstack([adj_np_to_save, adj_np])
                 samples_int_np_to_save = np.vstack([samples_int_np_to_save, samples_int_np])
 
-            # print("samples_int:", samples_int)
             gen_graph_list.extend(adjs_to_graphs(samples_int, True))
 
-        # print("len(self.test_graph_list):", len(self.test_graph_list))
         gen_graph_list = gen_graph_list[:len(self.test_graph_list)]
-        # print("gen_graph_list:", len(gen_graph_list))
+
+        print("len(gen_graph_list):", len(gen_graph_list))
+        print("len(test_graph_list):", len(self.test_graph_list))
 
         # -------- Evaluation --------
         methods, kernels = load_eval_settings(self.config.data.data)
@@ -119,3 +120,5 @@ class Sampler(object):
             sample_graph_list = pickle.load(f)
         plot_graphs_list(graphs=sample_graph_list, title=f'{self.config.ckpt}', max_num=16,
                          save_dir=self.log_folder_name)
+        
+        exit(0)

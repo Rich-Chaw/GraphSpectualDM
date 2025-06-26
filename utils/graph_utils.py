@@ -36,7 +36,9 @@ def mask_adjs(adjs, flags):
 
 # -------- Create flags tensor from graph dataset --------
 def node_flags(adj, eps=1e-5):
-
+    '''
+    :param adj: (batchsize, max_node_num, max_node_num)
+    '''
     flags = torch.abs(adj).sum(-1).gt(eps).to(dtype=torch.float32)
 
     if len(flags.shape)==3:
@@ -80,14 +82,20 @@ def init_flags(graph_list, config, batch_size=None):
     return flags
 
 def init_flags2(graph_list, config, batch_size=None):
+    ''' 
+    return:
+        flags: (batchsize, max_node_num)
+        selected_trains: (batchsize, max_node_num, max_node_num)
+    '''
     if batch_size is None:
         batch_size = config.data.batch_size
     max_node_num = config.data.max_node_num
+    # get the adjacency matrix
     graph_tensor = graphs_to_tensor(graph_list, max_node_num)
+    # randomly select batchsize graphs
     idx = np.random.randint(0, len(graph_list), batch_size)
-    flags = node_flags(graph_tensor[idx])
     selected_trains = graph_tensor[idx]
-
+    flags = node_flags(selected_trains)
     return flags, selected_trains
 
 def init_flags3(graph_list, config, batch_size=None):

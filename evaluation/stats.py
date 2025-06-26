@@ -163,7 +163,11 @@ motif_to_indices = {
     '3path': [1, 2],
     '4cycle': [8],
 }
+
+#linux
 COUNT_START_STR = 'orbit counts: \n'
+# windows
+# COUNT_START_STR = 'orbit counts: \r\n'
 
 
 def edge_list_reindexed(G):
@@ -218,6 +222,7 @@ def orbit_stats_all(graph_ref_list, graph_pred_list, KERNEL=gaussian):
         except Exception as e:
             print(e)
             continue
+
         # print("Label  number_of_nodes:", G.number_of_nodes(), np.sum(orbit_counts, axis=0))
         orbit_counts_graph = np.sum(orbit_counts, axis=0) / G.number_of_nodes()
         total_counts_ref.append(orbit_counts_graph)

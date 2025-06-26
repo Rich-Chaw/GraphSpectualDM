@@ -340,7 +340,7 @@ def load_model_from_ckpt(params, state_dict, device):
 
 def load_eval_settings(data, orbit_on=True):
     # Settings for generic graph generation
-    methods = ['degree', 'cluster', 'orbit']
+    methods = ['degree', 'cluster','orbit']
     kernels = {'degree':gaussian_emd,
                 'cluster':gaussian_emd,
                 'orbit':gaussian}

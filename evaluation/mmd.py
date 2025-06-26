@@ -15,11 +15,11 @@ from eden.graph import vectorize
 
 def emd(x, y, distance_scaling=1.0):
     # -------- convert histogram values x and y to float, and make them equal len --------
-    x = x.astype(np.float)
-    y = y.astype(np.float)
+    x = x.astype(np.float64)
+    y = y.astype(np.float64)
     support_size = max(len(x), len(y))
     # -------- diagonal-constant matrix --------
-    d_mat = toeplitz(range(support_size)).astype(np.float)  
+    d_mat = toeplitz(range(support_size)).astype(np.float64)  
     distance_mat = d_mat / distance_scaling
     x, y = process_tensor(x, y)
 
@@ -43,8 +43,8 @@ def gaussian_emd(x, y, sigma=1.0, distance_scaling=1.0):
 
 
 def gaussian(x, y, sigma=1.0):
-    x = x.astype(np.float)
-    y = y.astype(np.float)
+    x = x.astype(np.float64)
+    y = y.astype(np.float64)
     x, y = process_tensor(x, y)
     dist = np.linalg.norm(x - y, 2)
     return np.exp(-dist * dist / (2 * sigma * sigma))
@@ -52,8 +52,8 @@ def gaussian(x, y, sigma=1.0):
 
 def gaussian_tv(x, y, sigma=1.0):
     # -------- convert histogram values x and y to float, and make them equal len --------
-    x = x.astype(np.float)
-    y = y.astype(np.float)
+    x = x.astype(np.float64)
+    y = y.astype(np.float64)
     x, y = process_tensor(x, y)
 
     dist = np.abs(x - y).sum() / 2.0
@@ -75,6 +75,7 @@ def disc(samples1, samples2, kernel, is_parallel=True, *args, **kwargs):
     """ Discrepancy between 2 samples
     """
     d = 0
+    is_parallel = False
     if not is_parallel:
         for s1 in samples1:
             for s2 in samples2:

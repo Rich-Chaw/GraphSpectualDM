@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 import torch
 import argparse
 import time
@@ -6,7 +9,6 @@ from parsers.config import get_config
 from trainer import Trainer
 from sampler import Sampler
 import pynvml
-
 
 
 def main(work_type_args):
@@ -19,6 +21,7 @@ def main(work_type_args):
 
     # -------- Train --------
     if work_type_args.type == 'train':
+        print("in train mode")
         trainer = Trainer(config)
         ckpt = trainer.train(ts)
         if 'sample' in config.keys():
@@ -38,8 +41,10 @@ def main(work_type_args):
             config.ckpt = ""
         elif config.data.data == "ENZYMES":
             config.ckpt = ""
+        elif config.data.data == "Digg":
+            config.ckpt = "Jun18-06-35-35"
 
-            sampler = Sampler(config) 
+        sampler = Sampler(config) 
         sampler.sample()
 
     else:
@@ -48,5 +53,5 @@ def main(work_type_args):
 if __name__ == '__main__':
 
     work_type_parser = argparse.ArgumentParser()
-    work_type_parser.add_argument('--type', type=str, default="train")
+    work_type_parser.add_argument('--type', type=str, default="sample")
     main(work_type_parser.parse_known_args()[0])

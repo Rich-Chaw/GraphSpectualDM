@@ -2,16 +2,22 @@ import math
 import networkx as nx
 import numpy as np
 import os
-import matplotlib
-import matplotlib.pyplot as plt
+
 import pickle
 import warnings
-warnings.filterwarnings("ignore", category=matplotlib.cbook.MatplotlibDeprecationWarning)
 
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+fm.fontManager.addfont('/root/autodl-tmp/fonts/times.ttf')
+plt.rc('font',family='Times New Roman')
+
+warnings.filterwarnings("ignore", category=matplotlib.cbook.MatplotlibDeprecationWarning)
 
 options = {
     'node_size': 2,
-    'edge_color' : 'black',
+    'node_color' : 'brown',
+    'edge_color' : 'lightgray',
     'linewidths': 1,
     'width': 0.5
 }
@@ -68,3 +74,11 @@ def save_graph_list(log_folder_name, exp_name, gen_graph_list):
             pickle.dump(obj=gen_graph_list, file=f, protocol=pickle.HIGHEST_PROTOCOL)
     save_dir = './samples/pkl/{}/{}.pkl'.format(log_folder_name, exp_name)
     return save_dir
+
+if __name__=="__main__":
+    graph_name = "Digg"
+    with open(f"data/{graph_name}.pkl", 'rb') as f:
+        graph_list = pickle.load(f)
+    print(len(graph_list))
+    plot_graphs_list(graphs=graph_list, title=f'{graph_name}: 2-hop ego', max_num=16,
+                         save_dir=None)

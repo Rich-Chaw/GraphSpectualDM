@@ -6,11 +6,30 @@ Code for the paper [Fast Graph Generation via Spectral Diffusion](https://ieeexp
 
 GSDM is built in **Python 3.8.0** and **Pytorch 1.10.1**. Please use the following command to install the requirements:
 
+however, molsets can only be directly downloaded via pip while in python 3.7
+
 ```sh
 pip install -r requirements.txt
 ```
 
+eden包下载：
+来源：[eden](https://github.com/fabriziocosta/EDeN)
+
+```sh
+pip install git+https://github.com/fabriziocosta/EDeN.git --user
+```
+
+```sh
+git clone https://github.com/fabriziocosta/EDeN.git
+cd EDeN
+pip install -e .
+```
+
+moses包下载
+
+
 ## Running Experiments
+
 
 
 ### Train model
@@ -23,6 +42,7 @@ for example,
 
 ```sh
 CUDA_VISIBLE_DEVICES=0 python main.py --type train --config community_small
+python main.py --type train --config Digg
 ```
 
 ### Evaluation
@@ -33,6 +53,8 @@ For the evaluation of generic graph generation tasks, run the following command 
 cd evaluation/orca 
 g++ -O2 -std=c++11 -o orca orca.cpp
 ```
+
+### Generate
 
 To generate graphs using the trained score models, run the following command.
 

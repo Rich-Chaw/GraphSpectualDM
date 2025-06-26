@@ -40,9 +40,9 @@ def set_log(config, is_train=True):
 
     log_folder_name = os.path.join(*[data, exp_name])
     root = 'logs_train' if is_train else 'logs_sample'
-    if not(os.path.isdir(f'./{root}/{log_folder_name}')):
-        os.makedirs(os.path.join(f'./{root}/{log_folder_name}'))
-    log_dir = os.path.join(f'./{root}/{log_folder_name}/')
+    if not(os.path.isdir(f'./logs/{root}/{log_folder_name}')):
+        os.makedirs(os.path.join(f'./logs/{root}/{log_folder_name}'))
+    log_dir = os.path.join(f'./logs/{root}/{log_folder_name}/')
 
     if not(os.path.isdir(f'./checkpoints/{data}')) and is_train:
         os.makedirs(os.path.join(f'./checkpoints/{data}'))
