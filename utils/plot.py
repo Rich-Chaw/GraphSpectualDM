@@ -9,8 +9,8 @@ import warnings
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
-fm.fontManager.addfont('/root/autodl-tmp/fonts/times.ttf')
-plt.rc('font',family='Times New Roman')
+# fm.fontManager.addfont('/root/autodl-tmp/fonts/times.ttf')
+# plt.rc('font',family='Times New Roman')
 
 warnings.filterwarnings("ignore", category=matplotlib.cbook.MatplotlibDeprecationWarning)
 
